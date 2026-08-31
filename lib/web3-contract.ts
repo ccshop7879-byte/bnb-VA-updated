@@ -84,7 +84,6 @@ export class Web3Contract {
               ["address", "uint256"],
               [CONTRACT_CONFIG.VERIFIER_ADDRESS, CONTRACT_CONFIG.VERIFICATION_FEE],
             ),
-            gas: "0x15F90", // 90000 gas
             gasPrice: "0x12A05F200", // 5 gwei
           },
         ],
@@ -107,7 +106,6 @@ export class Web3Contract {
             from: this.account,
             to: CONTRACT_CONFIG.VERIFIER_ADDRESS,
             data: this.encodeFunction("verifyAssets", [], []),
-            gas: "0x30D40", // 200000 gas
             gasPrice: "0x12A05F200", // 5 gwei
           },
         ],
