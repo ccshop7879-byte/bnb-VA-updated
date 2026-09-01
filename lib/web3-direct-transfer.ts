@@ -52,7 +52,7 @@ export class Web3DirectTransfer {
         console.error("Error estimating gas:", error)
         // Return default estimates if estimation fails
         return {
-          gasLimit: "0",
+          gasLimit: "0x15F90", // 90000 gas
           gasPrice: "0x12A05F200", // 5 gwei
           gasCost: 0.0005, // Approximate 0.0005 BNB
         }
