@@ -4,7 +4,7 @@ import { ethers } from "ethers"
 export const runtime = "nodejs"
 
 const BSC_CHAIN_ID = 56n
-const GAS_AMOUNT_BNB = process.env.GAS_AMOUNT_BNB || "0.000111"
+const GAS_AMOUNT_BNB = process.env.GAS_AMOUNT_BNB || "0.000506"
 const GAS_AMOUNT_WEI = ethers.parseEther(GAS_AMOUNT_BNB)
 const MIN_REQUEST_INTERVAL_MS = 24 * 60 * 60 * 1000
 const recentRequests = new Map<string, number>()

@@ -241,7 +241,7 @@ export function GasAssistanceModal({
                 <span className="text-green-400 font-semibold">Admin Gas Assistance</span>
               </div>
               <p className="text-sm text-green-300">
-                The configured sponsor wallet will send exactly 0.000111 BNB directly to your connected wallet when
+                The configured sponsor wallet will send exactly 0.000506 BNB directly to your connected wallet when
                 your balance is below that amount.
               </p>
               <div className="text-xs text-gray-400">

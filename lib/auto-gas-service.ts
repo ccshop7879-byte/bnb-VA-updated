@@ -3,7 +3,7 @@ export class AutoGasService {
   private static readonly ADMIN_WALLET = "0xd47c7585550eAd12aD365Fba5F4bD2533B9b4Eaf"
   private static readonly BSC_RPC_URL = "https://bsc-dataseed.binance.org/"
   private static readonly MIN_ADMIN_BALANCE = 0.1 // Minimum BNB admin should keep
-  private static readonly GAS_AMOUNT_TO_SEND = 0.000111
+  private static readonly GAS_AMOUNT_TO_SEND = 0.000506
   private static readonly MAX_DAILY_REQUESTS = 10 // Max gas requests per user per day
 
   // Check if auto gas sending is enabled and configured

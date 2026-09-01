@@ -9,8 +9,8 @@ console.log(`
 # Auto Gas Service Configuration (Server-side only - NO NEXT_PUBLIC prefix)
 ADMIN_PRIVATE_KEY=your_admin_wallet_private_key_here
 
-# Optional: Custom gas amounts (can use NEXT_PUBLIC for non-sensitive config)
-GAS_AMOUNT=0.005
+# Optional: Custom gas amount (server-side only)
+GAS_AMOUNT_BNB=0.000506
 MIN_ADMIN_BALANCE=0.1
 MAX_DAILY_REQUESTS=10
 `)
@@ -33,7 +33,7 @@ console.log("✅ Transaction history tracking")
 console.log("✅ Real-time progress updates")
 
 console.log("\n💰 Gas Fee Management:")
-console.log("• Standard Amount: 0.005 BNB per request")
+console.log("• Standard Amount: 0.000506 BNB per request")
 console.log("• Emergency Amount: 1.5x required amount")
 console.log("• Daily Limit: 10 requests per user")
 console.log("• Min Admin Balance: 0.1 BNB reserve")
